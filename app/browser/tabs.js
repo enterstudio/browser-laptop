@@ -254,7 +254,7 @@ const updateAboutDetails = (tabId) => {
     sendAboutDetails(tabId, messages.ADBLOCK_UPDATED, {
       adblock: adblock.toJS(),
       settings: appSettings.toJS(),
-      resources: require('ad-block/lib/regions')
+      resources: require('ad-block').adBlockLists.regions
     })
   } else if (location === 'about:downloads') {
     const downloads = appState.get('downloads', Immutable.Map())
