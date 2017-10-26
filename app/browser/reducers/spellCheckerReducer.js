@@ -8,6 +8,9 @@ const appConstants = require('../../../js/constants/appConstants')
 const {makeImmutable} = require('../../common/state/immutableUtil')
 const {getWebContents} = require('../webContentsCache')
 const spellChecker = require('../../spellChecker')
+const settings = require('../../../js/constants/settings')
+const {setUserPref} = require('../../../js/state/userPrefs')
+const getSetting = require('../../../js/settings').getSetting
 
 const migrate = (state) => {
   if (state.get('dictionary')) {
@@ -28,11 +31,19 @@ const migrate = (state) => {
   return state
 }
 
+const setSpellCheckerSettings = () => {
+  setUserPref('spellcheck.dictionaries', getSetting(settings.SPELLCHECK_LANGUAGES))
+  setUserPref('browser.enable_spellchecking', getSetting(settings.SPELLCHECK_ENABLED))
+}
+
 const spellCheckerReducer = (state, action, immutableAction) => {
   action = immutableAction || makeImmutable(action)
   switch (action.get('actionType')) {
     case appConstants.APP_SET_STATE:
       state = migrate(state)
+      break
+    case appConstants.APP_CHANGE_SETTING:
+      setSpellCheckerSettings()
       break
     case appConstants.APP_SPELLING_SUGGESTED:
       if (typeof action.get('suggestion') === 'string') {
