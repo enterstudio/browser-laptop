@@ -244,14 +244,9 @@ class GeneralTab extends ImmutableComponent {
             {languageOptions}
           </SettingDropdown>
         </SettingItem>
-      </SettingsList>
-      <DefaultSectionTitle data-test-id='spellCheckSettings' data-l10n-id='spellCheckSettings' />
-      <SettingsList>
         <SettingCheckbox dataL10nId='enableSpellCheck' prefKey={settings.SPELLCHECK_ENABLED}
           settings={this.props.settings} onChangeSetting={this.props.onChangeSetting} />
         {spellCheckLanguages}
-      </SettingsList>
-      <SettingsList>
         <SettingItem dataL10nId='defaultZoomLevel'>
           <SettingDropdown
             value={defaultZoomSetting === undefined || defaultZoomSetting === null ? config.zoom.defaultValue : defaultZoomSetting}
